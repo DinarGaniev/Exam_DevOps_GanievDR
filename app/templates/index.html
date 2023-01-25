@@ -12,7 +12,6 @@
           </tr>
         </thead>
         {% for car in cars %}
-        {% if car.on_line == 'no'%}
         <tbody>
           <tr>
             <td>{{ car.model }}</td>
@@ -20,7 +19,6 @@
             <td>{{ car.num_of_car }}</td>
           </tr>
         </tbody>
-        {% endif %}
         {% endfor %}
     </table>
     {% for sms_code in sms_codes %}

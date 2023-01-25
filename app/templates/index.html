@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container text-center">
+    <h1>Такси без заказов:</h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">Driver</th>
+            <th scope="col">Number of car</th>
+          </tr>
+        </thead>
+        {% for car in cars %}
+        <tbody>
+          <tr>
+            <td>{{ car.model }}</td>
+            <td>{{ car.driver}}</td>
+            <td>{{ car.num_of_car }}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% for sms_code in sms_codes %}
+    {% if current_user.sms_code == sms_code.sms_code %}
+    <div class="text-center my-3">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('info', sms_code=current_user.sms_code) }}">Просмотр информации о заказе</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

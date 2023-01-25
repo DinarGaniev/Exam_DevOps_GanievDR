@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+
+  exam_devops_ganievdr_db: #Имя сервиса
+    container_name: exam_devops_ganievdr_db #Имя с которым запустится контейнер
+    hostname: exam_devops_ganievdr_db #Имя "хоста" которым будет считать себя контейнер
+    image: mysql:latest #Образ из которого запускается контейнер
+    volumes: #Подключаемые директории
+      - dbdata:/var/lib/mysql #Директории вида хост_директория:директория_контейнера
+    environment: #переменные окружения
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_USER: admin
+      MYSQL_HOST: exam_devops_ganievdr_db
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: exam_devops_ganievdr_db
+    ports: # Сопоставление портов хост-машины и контейнера
+      - 3306:3306
+    restart: unless-stopped #условие для рестарта в случае остановки контейнера
+
+  exam_devops_ganievdr_app:
+    container_name: exam_devops_ganievdr_app
+    hostname: exam_devops_ganievdr_app
+    image: dinarganiev/exam_devops_ganievdr:latest
+    build: # Параметры для сборки приложения
+      context: ./ # Каталог, используемый для сборки
+      dockerfile: Dockerfile # Файл, используемый для сборки образа приложения
+    ports:
+     - 10090:80
+    restart: unless-stopped
+    depends_on: # Указание на зависимость сервиса от другого сервиса
+      - exam_devops_ganievdr_db
+
+volumes:
+  dbdata:

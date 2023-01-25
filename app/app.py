@@ -33,7 +33,7 @@ from models import Order, Cars
 
 @app.route('/')
 def index():
-    cars = Cars.query.filter_by(on_line='no').all()
+    cars = Cars.query.all()
     sms_codes = Order.query.all()
     return render_template('index.html', cars=cars, sms_codes=sms_codes)
 
